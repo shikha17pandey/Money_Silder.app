@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:slide_page_app/card.dart';
 
 import 'package:slide_page_app/side.dart';
 import 'package:slide_page_app/side_dots.dart';
@@ -92,6 +93,7 @@ class _welcomeState extends State<welcome> {
           ),
         ),
       ),
+
     );
   }
 }

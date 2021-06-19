@@ -82,7 +82,7 @@ class Loginpage extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => CreditCardsPage()),
+                          MaterialPageRoute(builder: (context) => Dashboard()),
                         );
                       },
                     ),

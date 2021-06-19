@@ -1,9 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:slide_page_app/add_new_account.dart';
+import 'package:slide_page_app/card.dart';
+import 'package:slide_page_app/dashboard.dart';
 import 'main.dart';
 
-class AddMoneyCalculator extends StatelessWidget {
+class AddMoneyCalculator extends StatefulWidget {
   static const String _title = 'Flutter Code Sample';
+
+  @override
+  _AddMoneyCalculatorState createState() => _AddMoneyCalculatorState();
+}
+
+class _AddMoneyCalculatorState extends State<AddMoneyCalculator> {
+
+  int _currentIndex = 0;
+
+  _onTap() {
+    // this has changed
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (
+        BuildContext context) => _children[_currentIndex])); // this has changed
+  }
+
+  final List<Widget> _children = [
+    Dashboard(), //0
+    CreditCardsPage(), //1
+    AddMoneyCalculator(),
+    CreditCardsPage() //2
+  ];
+
   @override
   Widget build(BuildContext context) {
     String dropdownValue;
@@ -11,32 +36,42 @@ class AddMoneyCalculator extends StatelessWidget {
 
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.blue.shade900,
         backgroundColor: Colors.white,
-        // currentIndex: _selectedTabIndex,
-        // onTap: _changeIndex,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
+        currentIndex: _currentIndex,
         type: BottomNavigationBarType.fixed,
+
         items: [
+
           BottomNavigationBarItem(
-              activeIcon: Icon(
-                Icons.home,
-                color: Colors.blue.shade900,
-              ),
-              icon: Icon(
-                Icons.home,
-              ),
-              title: Text("Home")),
+            icon: Icon(Icons.home),
+            title: Text('Home'),
+            // backgroundColor: Colors.black,
+
+          ),
+
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_balance_wallet, color: Colors.grey),
-              title: Text("wallet")),
+            icon: Icon(Icons.account_balance_wallet),
+            title: Text('Wallet'),
+          ),
+
           BottomNavigationBarItem(
-              icon: Icon(Icons.calculate_sharp, color: Colors.grey),
-              title: Text("calculate")),
+            icon: Icon(Icons.calculate_sharp),
+            title: Text('Calculate'),
+          ),
+
           BottomNavigationBarItem(
-              icon: Icon(Icons.payment_outlined, color: Colors.grey),
-              title: Text("My Account")),
+            icon: Icon(Icons.credit_card),
+            title: Text('Credit Card'),
+          )
         ],
+
+        onTap: (index) { // this has changed
+          setState(() {
+            _currentIndex = index;
+          });
+          _onTap();
+        },
       ),
       body: Container(
         width: double.infinity,
@@ -157,7 +192,7 @@ class AddMoneyCalculator extends StatelessWidget {
                                   child: Text(
                                     "Choose Category",
                                     style:
-                                        TextStyle(color: Colors.blue.shade800),
+                                    TextStyle(color: Colors.blue.shade800),
                                   ),
                                 ),
                                 icon: Icon(
@@ -167,7 +202,7 @@ class AddMoneyCalculator extends StatelessWidget {
                                 ),
                                 isExpanded: true,
                                 items: your_list.map(
-                                  (val) {
+                                      (val) {
                                     return DropdownMenuItem(
                                       value: val,
                                       child: Text(val),
@@ -225,6 +260,4 @@ class AddMoneyCalculator extends StatelessWidget {
       ),
     );
   }
-
-  void setState(Null Function() param0) {}
 }

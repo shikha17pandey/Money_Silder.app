@@ -112,7 +112,7 @@ class AddNewAccountState extends State<AddNewAccount> {
         decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
-                colors: [Colors.blue[900], Colors.blue[800]])),
+                colors : [Colors.blue[900], Colors.blue[800]])),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
