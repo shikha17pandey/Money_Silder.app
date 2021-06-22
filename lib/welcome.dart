@@ -51,10 +51,9 @@ class _welcomeState extends State<welcome> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-//        color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: Column(
+           child: Column(
             children: <Widget>[
               Expanded(
                 child: Stack(

@@ -12,6 +12,11 @@ class DatabaseHelper {
   static final columnName = 'name';
   static final columnNumber = 'number';
 
+  static final Table = 'record_2';
+  static final columnID_1 = 'id';
+  static final columnSubjects = 'subjects';
+
+
   // make this a singleton class
   DatabaseHelper._privateConstructor();
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
@@ -22,6 +27,7 @@ class DatabaseHelper {
     if (_database != null) return _database;
     // lazily instantiate the db the first time it is accessed
     _database = await _initDatabase();
+    _database = await _database_1();
     return _database;
   }
 
@@ -35,6 +41,22 @@ class DatabaseHelper {
 
   // SQL code to create the database table
   Future _onCreate(Database db, int version) async {
+    await db.execute('''
+          CREATE TABLE $table (
+            $columnId INTEGER PRIMARY KEY,
+            $columnName TEXT NOT NULL,
+            $columnNumber INTEGER NOT NULL
+          )
+          ''');
+  }
+  _database_1() async {
+    var documentsDirectory = await getDatabasesPath();
+    String path = join(documentsDirectory, _databaseName);
+    return await openDatabase(path,
+        version: _databaseVersion, onCreate: _onCreate_1);
+  }
+
+  Future _onCreate_1(Database db, int version) async {
     await db.execute('''
           CREATE TABLE $table (
             $columnId INTEGER PRIMARY KEY,

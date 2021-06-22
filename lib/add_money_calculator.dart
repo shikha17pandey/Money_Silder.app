@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:slide_page_app/add_new_account.dart';
 import 'package:slide_page_app/card.dart';
 import 'package:slide_page_app/dashboard.dart';
+import 'package:slide_page_app/db_helper.dart';
+import 'package:slide_page_app/wallet.dart';
 import 'main.dart';
 
 class AddMoneyCalculator extends StatefulWidget {
@@ -9,10 +11,11 @@ class AddMoneyCalculator extends StatefulWidget {
 
   @override
   _AddMoneyCalculatorState createState() => _AddMoneyCalculatorState();
+  final dbHelper = DatabaseHelper.instance;
 }
 
 class _AddMoneyCalculatorState extends State<AddMoneyCalculator> {
-
+  String _subjects;
   int _currentIndex = 0;
 
   _onTap() {
@@ -24,15 +27,28 @@ class _AddMoneyCalculatorState extends State<AddMoneyCalculator> {
 
   final List<Widget> _children = [
     Dashboard(), //0
-    CreditCardsPage(), //1
+    Walletcard(), //1
     AddMoneyCalculator(),
     CreditCardsPage() //2
   ];
 
+  final dbHelper = DatabaseHelper.instance;
+
+  void _insert() async {
+    // row to insert
+    Map<String, dynamic> row = {
+      DatabaseHelper.columnSubjects: this._subjects,
+    };
+
+    final id = await dbHelper.insert(row);
+
+    print('inserted row id: $id');
+  }
+
   @override
   Widget build(BuildContext context) {
-    String dropdownValue;
-    const your_list = ["a", "b", "c", "d", "e", "f"];
+
+    const deviceTypes = ["Bank", "Shopping", "Flight Ticket", "Payment Received", "Online Shopping"];
 
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
@@ -174,53 +190,93 @@ class _AddMoneyCalculatorState extends State<AddMoneyCalculator> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(18.0),
                               color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.blue.shade200,
-                                  blurRadius: 20.0,
-                                  spreadRadius: 0.5,
-                                  offset: Offset(1.0, 1.0),
-                                ),
-                              ],
                             ),
-                            margin: EdgeInsets.only(top: 64.0),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20.0, right: 20.0),
-                              child: DropdownButton(
-                                hint: Center(
-                                  child: Text(
-                                    "Choose Category",
-                                    style:
-                                    TextStyle(color: Colors.blue.shade800),
+
+                           margin: EdgeInsets.only(top: 20.0),
+
+                            // child: Padding(
+                            //   padding: const EdgeInsets.only(
+                            //       left: 20.0, right: 20.0),
+                            //   child: DropdownButton(
+                            //     hint: Center(
+                            //       child: Text(
+                            //         "Choose Category",
+                            //         style:
+                            //         TextStyle(color: Colors.blue.shade800),
+                            //       ),
+                            //     ),
+                            //     icon: Icon(
+                            //       Icons.chevron_right_outlined,
+                            //       color: Colors.blue.shade900,
+                            //       size: 30.0,
+                            //     ),
+                            //     isExpanded: true,
+                            //     items: your_list.map(
+                            //           (val) {
+                            //         return DropdownMenuItem(
+                            //           value: val,
+                            //           child: Text(val),
+                            //         );
+                            //       },
+                            //     ).toList(),
+                            //     value: dropdownValue,
+                            //     onChanged: (value) {
+                            //       setState(() {
+                            //         dropdownValue = value;
+                            //         print(dropdownValue);
+                            //       });
+                            //     },
+                            //   ),
+                            // ),
+                              child: InputDecorator(
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(5.0))),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    hint: Center(
+                                      child: Text(
+                                        "Choose Category",
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                      ),
+                                    ),
+                                    icon: Icon(
+                                      Icons.chevron_right_outlined,
+                                      color: Colors.blue.shade900,
+                                      size: 30.0,
+                                    ),
+                                    value: _subjects,
+                                    isDense: true,
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        _subjects = newValue;
+                                      });
+                                      print(_subjects);
+                                    },
+                                    items: deviceTypes.map((String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                        ),),
+                                      );
+                                    }).toList(),
+
                                   ),
+
                                 ),
-                                icon: Icon(
-                                  Icons.chevron_right_outlined,
-                                  color: Colors.blue.shade900,
-                                  size: 30.0,
-                                ),
-                                isExpanded: true,
-                                items: your_list.map(
-                                      (val) {
-                                    return DropdownMenuItem(
-                                      value: val,
-                                      child: Text(val),
-                                    );
-                                  },
-                                ).toList(),
-                                value: dropdownValue,
-                                onChanged: (value) {
-                                  setState(() {
-                                    dropdownValue = value;
-                                  });
-                                },
                               ),
-                            ),
+
                           ),
                         ],
                       ),
                     ),
+
+
+
                     SizedBox(
                       height: 30.0,
                     ),
@@ -234,13 +290,6 @@ class _AddMoneyCalculatorState extends State<AddMoneyCalculator> {
                               borderRadius: BorderRadius.circular(18.0),
                               side: BorderSide(color: Colors.white)),
                           color: Colors.blue.shade900,
-                          onPressed: () {
-//                            Navigator.push(
-//                              context,
-//                              MaterialPageRoute(
-//                                  builder: (context) => moneypage()),
-//                            );
-                          },
                           child: Text(
                             'Continue',
                             style: TextStyle(
@@ -248,6 +297,15 @@ class _AddMoneyCalculatorState extends State<AddMoneyCalculator> {
                               color: Colors.white,
                             ),
                           ),
+                          onPressed: () {
+                            _insert();
+                            print(_subjects);
+                           Navigator.push(
+                             context,
+                             MaterialPageRoute(
+                                 builder: (context) => Dashboard()),
+                           );
+                          },
                         ),
                       ),
                     ),

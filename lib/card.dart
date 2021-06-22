@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:slide_page_app/add_money_calculator.dart';
 import 'package:slide_page_app/dashboard.dart';
+import 'package:slide_page_app/wallet.dart';
 
 class CreditCardsPage extends StatefulWidget {
   @override
@@ -20,7 +21,7 @@ class _CreditCardsPageState extends State<CreditCardsPage> {
 
   final List<Widget> _children = [
     Dashboard(), //0
-    CreditCardsPage(), //1
+    Walletcard(), //1
     AddMoneyCalculator(), //2
     CreditCardsPage() //3
   ];

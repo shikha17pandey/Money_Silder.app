@@ -25,6 +25,7 @@ dependencies:
     sdk: flutter
   flutter_svg: ^0.18.0
   pie_chart: ^4.0.0
+  percent_indicator: ^2.1.7
 
 
 

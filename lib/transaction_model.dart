@@ -27,13 +27,13 @@ var transactionData = [
   },
   {
     "name": "Bank Transfer",
-    "photo": "images/user_photo.jpg",
+    "photo": "images/bank-icon.jpg",
     "date": "25th july 2020",
     "amount": "+\$250.00"
   },
   {
     "name": "Flight Ticket",
-    "photo": "images/user_photo.jpg",
+    "photo": "images/ff.jpg",
     "date": "20th june 2020",
     "amount": "+\$450.00"
   },
