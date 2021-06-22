@@ -329,22 +329,20 @@ Color(0xFF504DE),
               height: 40,
             ),
             Container(
-              margin: EdgeInsets.only(left:40,right:40),
+              margin: EdgeInsets.only(left:20,right:20),
               alignment:Alignment.topLeft,
               child: LinearPercentIndicator( //leaner progress bar
                 animation: true,
                 animationDuration: 1000,
                 lineHeight: 60.0,
                 percent:percent/100,
-                leading: new Text("left content"),
-                trailing: new Text("right content"),
-                /*center: Text(
-                  "Ferrari F12",
+                center: Text(
+                  percent.toString() + "%",
                   style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 20.0,
                       fontWeight: FontWeight.w600,
                       color: Colors.black),
-                ),*/
+                ),
                 linearStrokeCap: LinearStrokeCap.roundAll,
                 progressColor: Colors.blue.shade900,
                 backgroundColor: Colors.grey[300],
