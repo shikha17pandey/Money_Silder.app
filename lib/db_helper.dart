@@ -7,7 +7,7 @@ class DatabaseHelper {
   static final _databaseName = "money.db";
   static final _databaseVersion = 1;
 
-  static final table = 'record';
+  static final table1 = 'record';
   static final columnId = 'id';
   static final columnName = 'name';
   static final columnNumber = 'number';
@@ -15,6 +15,13 @@ class DatabaseHelper {
   static final Table = 'record_2';
   static final columnID_1 = 'id';
   static final columnSubjects = 'subjects';
+
+   static final table = 'record_3';
+  static final columnId_2 = 'id';
+  static final columnUser = 'user';
+  static final columnEmail = 'email';
+  static final columnPassword = 'password';
+  static final columnConfirmPassword = 'ConfirmPassword';
 
 
   // make this a singleton class
@@ -28,6 +35,7 @@ class DatabaseHelper {
     // lazily instantiate the db the first time it is accessed
     _database = await _initDatabase();
     _database = await _database_1();
+    _database = await _database_2();
     return _database;
   }
 
@@ -62,6 +70,27 @@ class DatabaseHelper {
             $columnId INTEGER PRIMARY KEY,
             $columnName TEXT NOT NULL,
             $columnNumber INTEGER NOT NULL
+          )
+          ''');
+  }
+
+  _database_2() async {
+    var documentsDirectory = await getDatabasesPath();
+    String path = join(documentsDirectory, _databaseName);
+    return await openDatabase(path,
+        version: _databaseVersion,
+        onCreate: _onCreate_2);
+  }
+
+  // SQL code to create the database table
+  Future _onCreate_2(Database db, int version) async {
+    await db.execute('''
+          CREATE TABLE $table (
+            $columnId INTEGER PRIMARY KEY,
+            $columnUser TEXT NOT NULL,
+            $columnEmail INTEGER NOT NULL,
+            $columnPassword TEXT  NULL,
+            $columnConfirmPassword TEXT  NULL            
           )
           ''');
   }

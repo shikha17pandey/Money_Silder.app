@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:slide_page_app/side.dart';
+import 'package:slide_page_app/size_config_1.dart';
 import 'login_screen.dart';
 import 'screen.dart';
 
@@ -46,7 +47,7 @@ class SlideItem extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     width: 500,
-                    height: 300,
+                    height: 260,
                     decoration: BoxDecoration(
                       shape: BoxShape.rectangle,
                       image: DecorationImage(
@@ -55,7 +56,7 @@ class SlideItem extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 65),
+                  SizedBox(height: SizeConfig.blockSizeHorizontal*5),
                   Text(
                     slideList[index].title,
                     style: TextStyle(
@@ -64,7 +65,7 @@ class SlideItem extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: SizeConfig.blockSizeHorizontal*5),
                   Text(
                     slideList[index].description,
                     textAlign: TextAlign.center,
@@ -77,7 +78,7 @@ class SlideItem extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 65),
+              padding: const EdgeInsets.all(0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [

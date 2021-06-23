@@ -6,6 +6,7 @@ import 'package:slide_page_app/card.dart';
 
 import 'package:slide_page_app/side.dart';
 import 'package:slide_page_app/side_dots.dart';
+import 'package:slide_page_app/size_config_1.dart';
 import 'sideitem.dart';
 
 class welcome extends StatefulWidget {
@@ -48,8 +49,10 @@ class _welcomeState extends State<welcome> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       backgroundColor: Colors.white,
+      resizeToAvoidBottomPadding: false,
       body: Container(
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -70,7 +73,7 @@ class _welcomeState extends State<welcome> {
                       alignment: AlignmentDirectional.topStart,
                       children: <Widget>[
                         Container(
-                          margin: const EdgeInsets.only(bottom: 35),
+                          margin: const EdgeInsets.only(top: 40),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,

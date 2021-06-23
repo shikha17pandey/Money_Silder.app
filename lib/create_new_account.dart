@@ -1,16 +1,42 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:slide_page_app/BackgroundImage.dart';
 import 'package:slide_page_app/add_new_account.dart';
+import 'package:slide_page_app/db_helper.dart';
 import 'package:slide_page_app/login_screen.dart';
 import 'package:slide_page_app/pallete.dart';
 import 'package:slide_page_app/password.dart';
 import 'package:slide_page_app/rounder_button.dart';
 import 'package:slide_page_app/text_input_field.dart';
 
-class CreateNewAccount extends StatelessWidget {
+class CreateNewAccount extends StatefulWidget {
+  @override
+  _CreateNewAccountState createState() => _CreateNewAccountState();
+  final dbHelper = DatabaseHelper.instance;
+}
+
+class _CreateNewAccountState extends State<CreateNewAccount> {
+  String _user;
+  String _email;
+  String _password;
+  String _ConfirmPassword;
+
+
+  // final dbHelper = DatabaseHelper.instance;
+  //
+  // void _insert() async {
+  //   // row to insert
+  //   Map<String, dynamic> row = {
+  //     DatabaseHelper.columnSubjects: this._subjects,
+  //   };
+  //
+  //   final id = await dbHelper.insert(row);
+  //
+  //   print('inserted row id: $id');
+  // }
+
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -71,12 +97,14 @@ class CreateNewAccount extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    TextInputField(
+                   TextInputField(
                       icon: FontAwesomeIcons.user,
                       hint: 'User',
                       inputType: TextInputType.name,
                       inputAction: TextInputAction.next,
+
                     ),
+
                     TextInputField(
                       icon: FontAwesomeIcons.envelope,
                       hint: 'Email',

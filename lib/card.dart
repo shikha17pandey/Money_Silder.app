@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:slide_page_app/add_money_calculator.dart';
+import 'package:slide_page_app/add_new_account.dart';
 import 'package:slide_page_app/dashboard.dart';
 import 'package:slide_page_app/wallet.dart';
 
@@ -116,13 +117,22 @@ class _CreditCardsPageState extends State<CreditCardsPage> {
                             cardHolder: "Leo tool",
                             cardNumber: "206 654 XXXX 8938"),
 
-                     _buildAddCardButton(
-                        icon: Icon(Icons.add,
-                          color: Colors.white,
-                          size: 36.0,
+                     FlatButton(
+                       child: _buildAddCardButton(
+                          icon: Icon(Icons.add,
+                            color: Colors.white,
+                            size: 36.0,
+                          ),
+                          color: Color(0xFF000000),
                         ),
-                        color: Color(0xFF000000),
-                      ),
+                       onPressed: () {
+                         Navigator.push(
+                           context,
+                           MaterialPageRoute(
+                               builder: (context) => AddNewAccount()),
+                         );
+                       },
+                     ),
 
                     ],
                ),

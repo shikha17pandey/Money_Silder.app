@@ -101,6 +101,7 @@ class AddNewAccountState extends State<AddNewAccount> {
     };
     final id = await dbHelper.insert(row);
     var data = await dbHelper.queryAllRows();
+    print('records are $data');
     print('inserted row id: $id');
   }
 
