@@ -74,12 +74,12 @@ class _LoginpageState extends State<Loginpage> {
                     hint: 'Email',
                     inputType: TextInputType.emailAddress,
                     inputAction: TextInputAction.next,
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Email is Required';
-                      }
-                      return null;
-                    },
+                    // validator: (value) {
+                    //   if (value.isEmpty) {
+                    //     return 'Email is Required';
+                    //   }
+                    //   return null;
+                    // },
                     onSaved: (String value) {
                       _email = value;
                     },
@@ -88,12 +88,12 @@ class _LoginpageState extends State<Loginpage> {
                     icon: FontAwesomeIcons.lock,
                     hint: 'Password',
                     inputAction: TextInputAction.done,
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Password is Required';
-                      }
-                      return null;
-                    },
+                    // validator: (value) {
+                    //   if (value.isEmpty) {
+                    //     return 'Password is Required';
+                    //   }
+                    //   return null;
+                    // },
                     onSaved: (String value) {
                       _password = value;
                     },

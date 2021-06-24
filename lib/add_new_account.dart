@@ -38,12 +38,12 @@ class AddNewAccountState extends State<AddNewAccount> {
               contentPadding: EdgeInsets.all(15),
               border: InputBorder.none,
             ),
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Account Name is Required';
-              }
-              return null;
-            },
+            // validator: (value) {
+            //   if (value.isEmpty) {
+            //     return 'Account Name is Required';
+            //   }
+            //   return null;
+            // },
             onSaved: (String value) {
               _name = value;
             },
@@ -75,12 +75,12 @@ class AddNewAccountState extends State<AddNewAccount> {
               contentPadding: EdgeInsets.all(15),
               border: InputBorder.none,
             ),
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Account Number is Required';
-              }
-              return null;
-            },
+            // validator: (value) {
+            //   if (value.isEmpty) {
+            //     return 'Account Number is Required';
+            //   }
+            //   return null;
+            // },
             keyboardType: TextInputType.number,
             onSaved: (String value) {
               _number = value; //num.tryParse(value);

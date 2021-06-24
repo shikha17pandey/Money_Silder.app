@@ -136,12 +136,12 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                       hint: 'Password',
                       inputAction: TextInputAction.next,
                       keyboardType: TextInputType.number,
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Password is Required';
-                        }
-                        return null;
-                      },
+                      // validator: (value) {
+                      //   if (value.isEmpty) {
+                      //     return 'Password is Required';
+                      //   }
+                      //   return null;
+                      // },
                       onSaved: (String value) {
                         _password = value;
                       },
@@ -151,12 +151,12 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                       hint: 'Confirm Password',
                       inputAction: TextInputAction.done,
                       keyboardType: TextInputType.number,
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Confirm Password is Required';
-                        }
-                        return null;
-                      },
+                      // validator: (value) {
+                      //   if (value.isEmpty) {
+                      //     return 'Confirm Password is Required';
+                      //   }
+                      //   return null;
+                      // },
                       onSaved: (String value) {
                         _ConfirmPassword = value;
                       },
