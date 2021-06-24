@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:slide_page_app/pallete.dart';
+import 'package:slide_page_app/password.dart';
 
 class TextInputField extends StatelessWidget {
   const TextInputField({
@@ -7,7 +8,7 @@ class TextInputField extends StatelessWidget {
     @required this.icon,
     @required this.hint,
     this.inputType,
-    this.inputAction, InputDecoration decoration,
+    this.inputAction, InputDecoration decoration, Null Function(String value) onSaved, String Function(value) validator,
   }) : super(key: key);
 
   final IconData icon;

@@ -7,7 +7,7 @@ class PasswordInput extends StatelessWidget {
     @required this.icon,
     @required this.hint,
     this.inputType,
-    this.inputAction,
+    this.inputAction, Null Function(String value) onSaved, TextInputType keyboardType, String Function(value) validator,
   }) : super(key: key);
 
   final IconData icon;
@@ -51,4 +51,8 @@ class PasswordInput extends StatelessWidget {
       ),
     );
   }
+}
+
+class value {
+  bool isEmpty;
 }

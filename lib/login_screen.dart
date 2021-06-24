@@ -1,20 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:slide_page_app/BackgroundImage.dart';
-import 'package:slide_page_app/add_new_account.dart';
-import 'package:slide_page_app/card.dart';
 import 'package:slide_page_app/create_new_account.dart';
 import 'package:slide_page_app/dashboard.dart';
 import 'package:slide_page_app/forget_password.dart';
-import 'package:slide_page_app/home_page.dart';
 import 'package:slide_page_app/pallete.dart';
 import 'package:slide_page_app/password.dart';
-import 'package:slide_page_app/rounder_button.dart';
 import 'package:slide_page_app/text_input_field.dart';
-import 'package:slide_page_app/main.dart';
-import 'main.dart';
+import 'db4_helper.dart';
 
-class Loginpage extends StatelessWidget {
+
+class Loginpage extends StatefulWidget {
+  @override
+  _LoginpageState createState() => _LoginpageState();
+  final dbHelper = DatabaseHelper.instance;
+}
+
+class _LoginpageState extends State<Loginpage> {
+
+  String _email;
+  String _password;
+
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final dbHelper = DatabaseHelper.instance;
+
+  void _insert() async {
+    // row to insert
+    Map<String, dynamic> row = {
+      DatabaseHelper.columnEmail: this._email,
+      DatabaseHelper.columnPassword: this._password,
+
+
+    };
+
+    final id2 = await dbHelper.insert(row);
+    var data = await dbHelper.queryAllRows();
+
+    print('inserted row id: $id2');
+    print('records are $data');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -25,6 +52,7 @@ class Loginpage extends StatelessWidget {
         Scaffold(
           backgroundColor: Colors.transparent,
           body: Column(
+            key: _formKey,
             children: <Widget>[
               Flexible(
                 child: Center(
@@ -46,11 +74,29 @@ class Loginpage extends StatelessWidget {
                     hint: 'Email',
                     inputType: TextInputType.emailAddress,
                     inputAction: TextInputAction.next,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Email is Required';
+                      }
+                      return null;
+                    },
+                    onSaved: (String value) {
+                      _email = value;
+                    },
                   ),
                   PasswordInput(
                     icon: FontAwesomeIcons.lock,
                     hint: 'Password',
                     inputAction: TextInputAction.done,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Password is Required';
+                      }
+                      return null;
+                    },
+                    onSaved: (String value) {
+                      _password = value;
+                    },
                   ),
                   FlatButton(
                     child: Text(
@@ -84,6 +130,13 @@ class Loginpage extends StatelessWidget {
                           context,
                           MaterialPageRoute(builder: (context) => Dashboard()),
                         );
+                        if (!_formKey.currentState.validate()) {
+                          return;
+                        }
+                        _formKey.currentState.save();
+                        _insert();
+                        print(_email);
+                        print(_password);
                       },
                     ),
                   ),

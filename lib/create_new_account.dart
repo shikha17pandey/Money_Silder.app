@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:slide_page_app/BackgroundImage.dart';
 import 'package:slide_page_app/add_new_account.dart';
-import 'package:slide_page_app/db_helper.dart';
+import 'package:slide_page_app/db3_helper.dart';
 import 'package:slide_page_app/login_screen.dart';
 import 'package:slide_page_app/pallete.dart';
 import 'package:slide_page_app/password.dart';
 import 'package:slide_page_app/rounder_button.dart';
 import 'package:slide_page_app/text_input_field.dart';
+
 
 class CreateNewAccount extends StatefulWidget {
   @override
@@ -22,19 +23,26 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
   String _password;
   String _ConfirmPassword;
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  // final dbHelper = DatabaseHelper.instance;
-  //
-  // void _insert() async {
-  //   // row to insert
-  //   Map<String, dynamic> row = {
-  //     DatabaseHelper.columnSubjects: this._subjects,
-  //   };
-  //
-  //   final id = await dbHelper.insert(row);
-  //
-  //   print('inserted row id: $id');
-  // }
+   final dbHelper = DatabaseHelper.instance;
+
+   void _insert() async {
+     // row to insert
+     Map<String, dynamic> row = {
+       DatabaseHelper.columnUser: this._user,
+       DatabaseHelper.columnEmail: this._email,
+       DatabaseHelper.columnPassword: this._password,
+       DatabaseHelper.columnConfirmPassword: this._ConfirmPassword,
+
+     };
+
+     final id1 = await dbHelper.insert(row);
+     var data = await dbHelper.queryAllRows();
+
+     print('inserted row id: $id1');
+     print('records are $data');
+   }
 
 
   @override
@@ -102,6 +110,9 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                       hint: 'User',
                       inputType: TextInputType.name,
                       inputAction: TextInputAction.next,
+                     onSaved: (String value) {
+                       _user = value;
+                     },
 
                     ),
 
@@ -110,16 +121,45 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                       hint: 'Email',
                       inputType: TextInputType.emailAddress,
                       inputAction: TextInputAction.next,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Email is Required';
+                        }
+                        return null;
+                      },
+                      onSaved: (String value) {
+                        _email = value;
+                      },
                     ),
                     PasswordInput(
                       icon: FontAwesomeIcons.lock,
                       hint: 'Password',
                       inputAction: TextInputAction.next,
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Password is Required';
+                        }
+                        return null;
+                      },
+                      onSaved: (String value) {
+                        _password = value;
+                      },
                     ),
                     PasswordInput(
                       icon: FontAwesomeIcons.lock,
                       hint: 'Confirm Password',
                       inputAction: TextInputAction.done,
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Confirm Password is Required';
+                        }
+                        return null;
+                      },
+                      onSaved: (String value) {
+                        _ConfirmPassword = value;
+                      },
                     ),
                     SizedBox(
                       height: 25,
@@ -141,6 +181,16 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                             MaterialPageRoute(
                                 builder: (context) => AddNewAccount()),
                           );
+                          if (_formKey.currentState.validate()) {
+                            return;
+                          }
+                          _formKey.currentState.save();
+                          _insert();
+                          print(_user);
+                          print(_email);
+                          print(_password);
+                          print(_ConfirmPassword);
+
                         },
                       ),
                     ),

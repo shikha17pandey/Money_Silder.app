@@ -1,17 +1,19 @@
-import 'main.dart';
-import 'package:flutter/material.dart';
+import 'dart:io';
+
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter/foundation.dart';
 
 class DatabaseHelper {
+
+
   static final _databaseName = "money.db";
   static final _databaseVersion = 1;
 
   static final table = 'record';
   static final columnId = 'id';
-  static final columnName = 'name';
-  static final columnNumber = 'number';
-
+  static final columnSubjects = 'subjects';
 
 
   // make this a singleton class
@@ -24,7 +26,6 @@ class DatabaseHelper {
     if (_database != null) return _database;
     // lazily instantiate the db the first time it is accessed
     _database = await _initDatabase();
-
     return _database;
   }
 
@@ -33,20 +34,20 @@ class DatabaseHelper {
     var documentsDirectory = await getDatabasesPath();
     String path = join(documentsDirectory, _databaseName);
     return await openDatabase(path,
-        version: _databaseVersion, onCreate: _onCreate);
+        version: _databaseVersion,
+        onCreate: _onCreate);
   }
 
   // SQL code to create the database table
   Future _onCreate(Database db, int version) async {
     await db.execute('''
           CREATE TABLE $table (
-            $columnId INTEGER PRIMARY KEY,
-            $columnName TEXT NOT NULL,
-            $columnNumber INTEGER NOT NULL
+            $columnId INTEGER PRIMARY KEY,            
+            $columnSubjects TEXT  NULL
+                   
           )
           ''');
   }
-
 
   // Helper methods
 
@@ -69,8 +70,7 @@ class DatabaseHelper {
   // raw SQL commands. This method uses a raw query to give the row count.
   Future<int> queryRowCount() async {
     Database db = await instance.database;
-    return Sqflite.firstIntValue(
-        await db.rawQuery('SELECT COUNT(*) FROM $table'));
+    return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $table'));
   }
 
   // We are assuming here that the id column in the map is set. The other

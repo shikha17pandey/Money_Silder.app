@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:slide_page_app/add_new_account.dart';
 import 'package:slide_page_app/card.dart';
 import 'package:slide_page_app/dashboard.dart';
-import 'package:slide_page_app/db_helper.dart';
+import 'package:slide_page_app/db2_helper.dart';
 import 'package:slide_page_app/wallet.dart';
 import 'main.dart';
 
