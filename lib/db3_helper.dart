@@ -11,7 +11,7 @@ class DatabaseHelper {
   static final _databaseName = "money.db";
   static final _databaseVersion = 1;
 
-  static final table = 'record';
+  static final table = 'record1';
   static final columnId = 'id1';
   static final columnUser = 'user';
   static final columnEmail = 'email';

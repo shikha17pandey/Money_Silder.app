@@ -13,8 +13,10 @@ import 'package:slide_page_app/text_input_field.dart';
 
 class CreateNewAccount extends StatefulWidget {
   @override
-  _CreateNewAccountState createState() => _CreateNewAccountState();
-  final dbHelper = DatabaseHelper.instance;
+  State<StatefulWidget> createState() {
+    final dbHelper = DatabaseHelper.instance;
+    return _CreateNewAccountState();
+  }
 }
 
 class _CreateNewAccountState extends State<CreateNewAccount> {
@@ -23,7 +25,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
   String _password;
   String _ConfirmPassword;
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey1 = GlobalKey<FormState>();
 
    final dbHelper = DatabaseHelper.instance;
 
@@ -41,7 +43,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
      var data = await dbHelper.queryAllRows();
 
      print('inserted row id: $id1');
-     print('records are $data');
+     print('record1 are $data');
    }
 
 
@@ -101,102 +103,136 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                   ],
                 ),
                 SizedBox(
-                  height: size.width * 0.1,
+                  height: 15,
                 ),
-                Column(
-                  children: [
-                   TextInputField(
-                      icon: FontAwesomeIcons.user,
-                      hint: 'User',
-                      inputType: TextInputType.name,
-                      inputAction: TextInputAction.next,
-                     onSaved: (String value) {
-                       _user = value;
-                     },
+                Form(
+                  key: _formKey1,
+                  child: Column(
+                    children: [
+                      Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                            filled: true,
+                        icon: const Icon(Icons.person),
+                        hintText: 'Enter your full name',
+                            labelText: 'Name'
+                        ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Name is Required';
+                          }
+                          return null;
+                        },
+                        onSaved: (String value) {
+                          _user = value;
+                        },
+                      ),
+                    ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                              filled: true,
+                              icon: const Icon(Icons.mail_outline),
+                              hintText: 'Enter the user Email ID',
+                              labelText: 'Email ID'
+                          ),
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Email Id is Required';
+                            }
+                            return null;
+                          },
+                          onSaved: (String value) {
+                            _email = value;
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                              filled: true,
+                              icon: const Icon(Icons.lock),
+                              hintText: 'Enter the Paswword',
+                              labelText: 'Password'
+                          ),
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Password is Required';
+                            }
+                            return null;
+                          },
+                          onSaved: (String value) {
+                            _password = value;
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                              filled: true,
+                              icon: const Icon(Icons.lock),
+                              hintText: 'Enter the Confirm Paswword',
+                              labelText: 'Confirm Password'
+                          ),
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Password is Required';
+                            }
+                            return null;
+                          },
+                          onSaved: (String value) {
+                            _ConfirmPassword = value;
+                          },
+                        ),
+                      ),
 
-                    ),
-
-                    TextInputField(
-                      icon: FontAwesomeIcons.envelope,
-                      hint: 'Email',
-                      inputType: TextInputType.emailAddress,
-                      inputAction: TextInputAction.next,
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Email is Required';
-                        }
-                        return null;
-                      },
-                      onSaved: (String value) {
-                        _email = value;
-                      },
-                    ),
-                    PasswordInput(
-                      icon: FontAwesomeIcons.lock,
-                      hint: 'Password',
-                      inputAction: TextInputAction.next,
-                      keyboardType: TextInputType.number,
-                      // validator: (value) {
-                      //   if (value.isEmpty) {
-                      //     return 'Password is Required';
-                      //   }
-                      //   return null;
-                      // },
-                      onSaved: (String value) {
-                        _password = value;
-                      },
-                    ),
-                    PasswordInput(
-                      icon: FontAwesomeIcons.lock,
-                      hint: 'Confirm Password',
-                      inputAction: TextInputAction.done,
-                      keyboardType: TextInputType.number,
-                      // validator: (value) {
-                      //   if (value.isEmpty) {
-                      //     return 'Confirm Password is Required';
-                      //   }
-                      //   return null;
-                      // },
-                      onSaved: (String value) {
-                        _ConfirmPassword = value;
-                      },
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    Container(
-                      child: FlatButton(
-                        height: 50.0,
+                      SizedBox(
+                        height: 15,
+                      ),
+                      RaisedButton(
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
+                            borderRadius: BorderRadius.circular(20.0),
                             side: BorderSide(color: Colors.white)),
                         color: kBlue,
-                        child: Text(
-                          'Register',
+                        child: Text('Register',
                           style: kBodyText,
                         ),
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AddNewAccount()),
-                          );
-                          if (_formKey.currentState.validate()) {
+                          if (!_formKey1.currentState.validate()) {
                             return;
                           }
-                          _formKey.currentState.save();
+                          _formKey1.currentState.save();
+
+                          //  var insertDb2 = insertDb(_name, _age, currentSelectedValue, course);
                           _insert();
                           print(_user);
                           print(_email);
                           print(_password);
                           print(_ConfirmPassword);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddNewAccount()),
+                          );
+
 
                         },
                       ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
+
+                      SizedBox(
+                        height: 15,
+                      ),
+                    ],
+                  ),
+                ),
+                Column(
+                  children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -224,7 +260,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                       height: 20,
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),

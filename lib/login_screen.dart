@@ -39,7 +39,7 @@ class _LoginpageState extends State<Loginpage> {
     var data = await dbHelper.queryAllRows();
 
     print('inserted row id: $id2');
-    print('records are $data');
+    print('record2 are $data');
   }
 
   @override
